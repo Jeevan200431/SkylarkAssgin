@@ -14,11 +14,25 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
 # GOOGLE CONNECTION (OPEN ONCE)
 # =====================================================
 
+from oauth2client.service_account import ServiceAccountCredentials
+
 @st.cache_resource
 def get_spreadsheet():
-    creds = ServiceAccountCredentials.from_json_keyfile_name(
-        "service_account.json", SCOPES
-    )
+
+    try:
+        # Cloud mode
+        creds_dict = st.secrets["gcp_service_account"]
+        creds = ServiceAccountCredentials.from_json_keyfile_dict(
+            creds_dict,
+            ["https://www.googleapis.com/auth/spreadsheets"]
+        )
+    except Exception:
+        # Local mode
+        creds = ServiceAccountCredentials.from_json_keyfile_name(
+            "service_account.json",
+            ["https://www.googleapis.com/auth/spreadsheets"]
+        )
+
     client = gspread.authorize(creds)
     return client.open_by_key(SHEET_ID)
 
