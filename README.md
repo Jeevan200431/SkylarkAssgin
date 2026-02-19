@@ -5,6 +5,9 @@ An AI-powered operations coordination system built to manage pilots, drones, and
 This project was developed as part of a technical assignment to simulate the responsibilities of a Drone Operations Coordinator.
 
 ---
+### LIVE DEMO  
+URL : https://jeevandroneoperations.streamlit.app/  
+
 
 ##  Problem Overview
 
